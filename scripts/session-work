@@ -1,0 +1,6 @@
+#!/bin/sh
+
+tmux new-session -A -s work
+tmux neww -t :1 -n vim
+tmux neww -t :2 -n ranger
+#tmux neww -n ranger -t work:2 ranger

@@ -1,0 +1,33 @@
+# Aliases {{{
+alias gc="git clone "
+
+alias ls="ls $LS_OPTIONS"
+alias lsl="ls -l "
+alias lsa="ls -a "
+alias lsd="ls -X "
+alias lsdl="ls -lX "
+alias grep="grep --color=always"
+
+alias rm="rm -rf "
+alias cp="cp -r "
+
+alias pgrep="pgrep -fil "
+alias ts="tsp "
+
+alias rr="ranger "
+#alias vim="vim --servername server "
+alias vimdiff="vim -d "
+
+# cd .. aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+# server
+alias connect-server-xx="ssh -i ~/.xxx/xxxxx xxxxxx@35.244.43.39"
+alias connect-server-xx="ssh -i ~/.xxx/xxxxx xxxxxx@35.244.43.39"
+
+alias connect-phone="sftp -P 1234 xxx@192.168.43.1"
+# }}}

@@ -1,0 +1,124 @@
+source colors.muttrc
+source keybindings.muttrc
+
+color status green black 
+
+# FOLDERS # {{{
+set folder = ~/.mail/
+set header_cache = ~/.config/.mutt/cache/headers
+set message_cachedir = ~/.config/.mutt/cache/bodies
+set certificate_file = /etc/ssl/certs/ca-certificates.crt
+set mailcap_path = ~/.mailcap.rc
+set tmpdir = ~/.config/.mutt/tmp
+# }}}
+
+# SET OPTIONS # {{{
+set mbox_type = Maildir
+set header_cache
+set mail_check = 0
+set delete
+set quit
+set thorough_search
+set mail_check_stats
+set wait_key = no
+set sort=threads
+set sort_aux= reverse-last-date-received
+set pipe_decode=yes
+set query_command="notmuch-addrlookup --mutt '%s'"
+bind editor <Tab> complete-query
+bind editor ^T complete
+set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+
+set index_format = "%4C (%4c) %Z %?GI?%GI& ? %[%d/%b]  %-20.19F %?K?%15.14K&               ? %?M?(%3M)&     ? %?X? & ? %s %> %?g?%g?"
+# }}}
+
+# SIDEBAR # {{{
+set sidebar_visible
+set sidebar_format = "%B%?n?[%n]?%* %?N? [%N/%S]?"
+set sidebar_short_path
+set sidebar_delim_chars="/"
+set sidebar_folder_indent
+set sidebar_width = 25
+
+color indicator cyan black
+color sidebar_highlight red white
+color sidebar_divider blue black
+color sidebar_flagged red black
+color sidebar_new green black
+color sidebar_ordinary blue black
+# }}}
+
+# BINDINGS AND MACROS {{{
+## PAGER
+bind pager K previous-page
+bind pager J next-page
+bind pager h previous-undeleted
+bind pager l next-undeleted
+#
+## URLSCAN #
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
+## SYNC #
+macro index,pager O "<shell-escape>new-mail.sh<enter>" "run mbsync to sync all mail"
+
+## SIDEBAR BINDINGS ##
+macro index <up> "<sidebar-prev><sidebar-open>"
+macro index <down> "<sidebar-next><sidebar-open>"
+bind index,pager S sidebar-toggle-visible
+
+## TAB AUTOCOMPLETE ##
+bind editor <Tab> complete-query
+
+## COPY MESSAGE
+macro pager <f5> "<pipe-message>xclip -in -selection clipboard<enter>"  "Copy to the clipboard"
+
+## NOTMUCH
+# open a different virtual folder
+bind index,pager X change-vfolder
+# read entire thread of the current message
+bind index,pager + entire-thread
+# generate virtual folder from query
+bind index,pager \eX vfolder-from-query
+# generate virtual folder from query with time window
+bind index < vfolder-window-backward
+bind index > vfolder-window-forward
+# toggle between mailboxes and virtual mailboxes
+# bind index,pager ??? sidebar-to
+# }}}
+
+# MAILBOXES # {{{
+mailboxes =gmail
+mailboxes =gmail/allmail =gmail/important =gmail/starred =gmail/drafts =gmail/sent  =gmail/trash
+
+set spoolfile = "+gmail/allmail"
+
+set from = "sanap.tejas@gmail.com"
+set sendmail = "msmtp -a gmail"
+set postponed = "+gmail/drafts"
+set record = "+gmail/sent"
+set from = "sanap.tejas@gmail.com"
+set realname = "Tejas Sanap"
+# }}}
+
+# MAILING LISTS # {{{
+subscribe plug-mail@plug.org.in
+subscribe users@lists.dgplug.org
+subscribe scipy-dev@python.org
+subscribe python-simpy@googlegroups.com
+subscribe pystatsmodels@googlegroups.com
+subscribe CALCULIX@yahoogroups.com
+subscribe ev@lists.evdl.org
+subscribe isync-devel@lists.sourceforge.net
+subscribe arch-general@archlinux.org
+# }}}
+
+# NOTMUCH {{{
+set nm_db_limit = 0
+set nm_default_uri = "notmuch:///home/tsanap/.mail/gmail/"
+set nm_query_type = messages
+set nm_unread_tag = unread
+set vfolder_format = "%6n(%6N) %f"
+set virtual_spoolfile = no
+# }}}
+# vim foldmethod=marker

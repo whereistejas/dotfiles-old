@@ -1,0 +1,28 @@
+#include "/home/tsanap/.xfiles/themes/Tomorrow.xrdb"
+#include "/home/tsanap/.xfiles/colors"
+
+
+XTerm*termName: xterm-256color
+XTerm*faceSize: 18
+XTerm*faceName: Hack:style=Regular
+! XTerm*faceBold: Hack:style=Bold
+! XTerm*faceName: San Francisco Text:style=Medium:size=15
+! XTerm*faceBold:  San Francisco Text:style=Bold:size=15
+! XTerm*faceName: Source Code Pro:style=Regular:size=15
+! XTerm*faceBold: Source Code Pro:style=Bold:size=15
+! XTerm*font2: Source Code Pro:style=Italic:size=15
+XTerm*italicULMode: false
+XTerm*dynamicColors: true
+XTerm*cursorBlink: true
+XTerm*autoWrap: true
+XTerm*scrollBar: false
+xterm*disallowedWindowOps: 20,21,SetXProp
+XTerm*internalBorder: 0
+XTerm*scaleHeight: 1
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*selectToClipboard: true
+XTerm*eightBitInput: false
+
+Xft.dpi: 96
+Xft.hintstyle: hintmedium
+Xft.hinting: true

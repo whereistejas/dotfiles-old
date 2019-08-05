@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "/home/tsanap/open_directories/Music/qutebrowser"
+mkdir "$2" && cd "$2"
+wget -nd -np -r -erobots=off -N -c -A '*.m4a, *.mp3, *.flac' "$1"

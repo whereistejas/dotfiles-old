@@ -1,0 +1,7 @@
+#include ".xfiles/themes/Material.xrdb"
+#include ".xfiles/colors"
+#include ".xfiles/xterm"
+
+Xft.dpi: 96
+Xft.hintstyle: hintmedium
+Xft.hinting: true

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+today=$(date +"%d_%m_%Y")
+day=$(date +%d)
+month=$(date +%m)
+year=$(date +%Y)
+
+filename="$year-$month-$day-$today"
+foldername="$HOME/work_bin/diary/_posts"
+site="$HOME/work_bin/diary"
+destination="$HOME/work_bin/diary/_site"
+config="$site/_config.yml"
+jekyllurl="http://127.0.0.1:4000/"
+
+file="$foldername/$filename.md"
+
+frontmod="---\nlayout: post\ntitle: $today\nauthor: Tejas Sanap\nurl: :\\\title\n---"
+
+parallel --bg --halt now,success=1 jekyll serve -lo -c $config -s $site -d $destination; if [[ -f $file ]]; then
+	vim $file 
+else
+	echo -e $frontmod > $file
+	vim $file
+fi
+
+kill -9 $(pgrep -fi jekyll)

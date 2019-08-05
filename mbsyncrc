@@ -1,0 +1,73 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User sanap.tejas@gmail.com
+PassCmd ""
+SSLType IMAPS
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+# The trailing "/" is important
+Path ~/.mail/gmail/
+
+Channel gmail-allmail
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:allmail
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-starred
+Master :gmail-remote:"[Gmail]/Starred"
+Slave :gmail-local:starred
+Sync PullDelete Push
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-important
+Master :gmail-remote:"[Gmail]/Important"
+Slave :gmail-local:important
+Sync PullDelete Push
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:drafts
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-spam
+Master :gmail-remote:"[Gmail]/Spam"
+Slave :gmail-local:spam
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:trash
+Sync Push
+Create Both
+Expunge Both
+SyncState *
+
+Group gmail
+Channel gmail-allmail
+Channel gmail-starred
+Channel gmail-important
+Channel gmail-sent
+Channel gmail-drafts
+Channel gmail-spam
+Channel gmail-trash

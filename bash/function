@@ -1,0 +1,94 @@
+# Functions {{{
+
+# cfg-things {{{
+cfg-bashrc() { $EDITOR ~/.bashrc ;}
+cfg-inputrc() { $EDITOR ~/.inputrc ;}
+cfg-newsboat() { $EDITOR ~/.config/newsboat/config ;}
+cfg-newsboat-queue() { $EDITOR ~/.config/newsboat/queue ;}
+cfg-newsboat-urls() { $EDITOR ~/.config/newsboat/urls ;}
+cfg-ranger() { $EDITOR ~/.config/ranger/rc.conf ;}
+cfg-ranger-rifle() { $EDITOR ~/.config/ranger/rifle.conf ;}
+cfg-ranger-commands() { $EDITOR ~/.config/ranger/commands.py ;}
+cfg-ranger-scope() { $EDITOR ~/.config/ranger/scope.sh ;}
+cfg-rtv() { $EDITOR ~/.config/rtv/rtv.cfg ;}
+cfg-tmuxrc() { $EDITOR ~/.tmux.conf ;}
+cfg-tor() { sudo $EDITOR /etc/tor/torrc ;}
+cfg-vimrc() { $EDITOR ~/.vimrc ;}
+cfg-qutebrowser() { $EDITOR ~/.config/qutebrowser/config.py ;}
+cfg-xterm() { $EDITOR ~/.xfiles/xterm ;}
+cfg-mutt() { $EDITOR ~/.config/neomutt/muttrc ;}
+cfg-irssi() { $EDITOR ~/.irssi/config ;}
+cfg-i3() { $EDITOR ~/.config/i3/config ;}
+cfg-polybar() { $EDITOR ~/.config/polybar/config ;}
+rld-bashrc() { source ~/.bashrc ;}
+rld-xterm() { xrdb -load ~/.Xresources ;}
+# }}}
+
+# useful stuff
+mdcd() { mkdir -p -v $1; cd $1 ;}	# create folder then cd into it
+
+lsg() {
+  keyword=$(echo "$@" |  sed 's/ /.*/g')
+  ls -hlA --color=yes \
+  | awk '{k=0;for(i=0;i<=8;i++)k+=((substr($1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(" %0o ",k);print}' \
+  | grep -iE $keyword
+}
+
+# quickly cd out of directories using numbers, example: up 2
+up() { local x='';for i in $(seq ${1:-1});do x="$x../"; done;cd $x; }
+
+# Extract compressed files {{{
+extract () {
+    if [ -f "$1" ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf "$1"    ;;
+            *.tar.gz)    tar xvzf "$1"    ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       7z x "$1"       ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xvf "$1"     ;;
+            *.tbz2)      tar xvjf "$1"    ;;
+            *.tgz)       tar xvzf "$1"    ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *)           echo "don't know how to extract '$1'..." ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+# }}}
+
+# perform basic maths in terminal
+math() { python -c "print($1)" ; }
+
+# convert markdown to  pdf
+md2pdf() {  pandoc -s -V geometry:margin=0.75in -o $2 $1; }
+
+# fasd vim
+vf() { vim $(f $1 | cut -f1 -d" ") ; }
+
+# md to pdf
+md2pdf() { pandoc $1 -o $2 --template eisvogel ; }
+
+#open directories {{{
+od-mus() {
+	cd "/home/tsanap/open_directories/Music"
+	mkdir "$2" && cd "$2"
+	wget -nd -np -r -erobots=off -N -c -A '*.m4a, *.mp3, *.flac' "$1"
+}
+
+od-vid() {
+	cd "/home/tsanap/open_directories/Videos"
+	mkdir "$2" && cd "$2"
+	wget -nd -np -r -erobots=off -N -c -A '*.mkv, *.mp4, *.m4v' "$1"
+}
+
+od-pdf() { cd "/home/tsanap/open_directories/Books" && wget -nd -np -r -erobots=off -N -c -A "*.pdf, *.epub, *.djvu, *.doc, *.docx" "$1" ; }
+
+od-ppt() { cd "/home/tsanap/open_directories/Books/Presentations" && wget -nd -np -r -erobots=off -N -c -A "*.pdf, *.ppt, *.pptx" "$1" ; }
+
+#}}}
+# }}}
+

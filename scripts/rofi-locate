@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xdg-open "$( updatedb -l 0 -o ~/.locate.db && locate home -d ~/.locate.db | rofi -threads 0 -dmenu -i -p "locate: " -theme bmenu)"

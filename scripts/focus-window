@@ -1,0 +1,28 @@
+#!/bin/bash
+
+all=$(wmctrl -lx)
+
+win=()
+ws=()
+cls=()
+
+readarray -t win <<< "$all"
+readarray -t ws <<< $(echo "$all" | awk '{print $2}')
+readarray -t cls <<< $(echo "$all" | awk '{print $3}')
+
+num="${#win[@]}"
+caps=$(echo $1 | tr [:lower:] [:upper:])
+curr="$1$caps"
+
+exist=""
+# check if a window class exists
+for window in "${cls[@]}"; do
+	test="$( echo "$window" | grep -o -E "\b[$curr]*\b" )"
+	if [[ -n "$test" ]]; then
+		wmctrl -x -a "$window"
+		exist="TRUE"
+	fi
+done
+if [[ -z $exist ]]; then
+	($1 > /dev/null 2>&1 &)
+fi

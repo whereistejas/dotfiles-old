@@ -1,0 +1,121 @@
+#! /home/tsanap/anaconda3/bin/python
+import os, sys, argparse
+
+def main():
+    target_file = "/sys/class/backlight/intel_backlight/brightness"
+    actual_file = "/sys/class/backlight/intel_backlight/actual_brightness"
+    max_file = "/sys/class/backlight/intel_backlight/max_brightness"
+    
+    filename = open(actual_file, "r")
+    actual_value = int(filename.read())
+    filename.close()
+    
+    filename = open(max_file, "r")
+    max_value = int(filename.read())
+    filename.close()
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-s", help="set brightness __value__", type=int)
+    parser.add_argument("-i", help="increase brightness by __value__", type=int)
+    parser.add_argument("-d", help="decrease brightness by __value__", type=int)
+    parser.add_argument("-V", help="set verbosity", action="store_true")
+    parser.add_argument("-q", help="show current brightness", action="store_true")
+
+    args = parser.parse_args()
+
+    if args.V == True:
+        if args.q:
+            current_value = to_percent(actual_value, max_value)
+
+            print( current_value, "%")
+            print( "Current Value is: ", actual_value )
+            print( "Maximum Value is: ", max_value )
+
+        elif args.s:
+            set_value = from_percent(args.s, max_value)
+            current_value = to_percent(set_value, max_value)
+
+            print( "Set Value to: ", set_value)
+            print( "Current Value is: ", actual_value, ",", end=" ")
+            print( current_value, "%")
+            print( "Maximum Value is: ", max_value )
+            write_value(target_file, set_value)
+
+        elif args.i:
+            set_value = increase(actual_value, max_value, args.i, True)
+            current_value = to_percent(set_value, max_value)
+
+            print( "Set Value to: ", set_value)
+            print( "Current Value is: ", actual_value, ",", end=" ")
+            print( current_value, "%")
+            print( "Maximum Value is: ", max_value )
+            write_value(target_file, set_value)
+
+        elif args.d:
+            set_value = increase(actual_value, max_value, args.d, False)
+            current_value = to_percent(set_value, max_value)
+
+            print( "Set Value to: ", set_value)
+            print( "Current Value is: ", actual_value, ",", end=" ")
+            print( current_value, "%")
+            print( "Maximum Value is: ", max_value )
+            write_value(target_file, set_value)
+    else:
+        if args.q:
+            current_value = to_percent(actual_value, max_value)
+            print( current_value, "%")
+            print( "Current Value is: ", actual_value )
+            print( "Maximum Value is: ", max_value )
+
+        elif args.s:
+            set_value = from_percent(args.s, max_value)
+            current_value = to_percent(set_value, max_value)
+
+            write_value(target_file, set_value)
+
+        elif args.i:
+            set_value = increase(actual_value, max_value, args.i, True)
+            current_value = to_percent(set_value, max_value)
+
+            write_value(target_file, set_value)
+
+        elif args.d:
+            set_value = increase(actual_value, max_value, args.d, False)
+            current_value = to_percent(set_value, max_value)
+
+            write_value(target_file, set_value)
+
+def to_percent(actual, max):
+    set = round( actual/max * 100)
+    return set
+
+def from_percent(percent, max):
+    set = round( (percent/100) * max )
+    set = check_set(set)
+    return set
+
+def increase(actual, max, set, sign):
+    if sign == True:
+        inc_value = round( (set/100) * max )
+        set = actual + inc_value
+    else:
+        dec_value = round( (set/100) * max )
+        set = actual - dec_value
+    set = check_set(set)
+    return set
+    
+def check_set(set):
+    if set <= 50:
+        set = 50
+    elif set >= 900:
+        set = 900
+    return set
+
+def write_value(target_file, set):
+    filename = open(target_file, "w")
+    filename.write(str(set))
+    filename.close()
+
+if __name__ == "__main__":
+    main()

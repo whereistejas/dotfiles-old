@@ -1,0 +1,4 @@
+#!/bin/sh
+cd "/home/tsanap/open_directories/Videos/qutebrowser"
+mkdir "$2" && cd "$2"
+wget -nd -np -r -erobots=off -N -c -A '*.mkv, *.mp4, *.m4v' "$1"

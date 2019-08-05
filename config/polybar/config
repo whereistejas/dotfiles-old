@@ -1,0 +1,299 @@
+; Colors {{{
+[colors]
+background = #AA2E3440
+foreground = #D8DEE9
+black      = #4C566A
+red        = #BF616A
+green      = #A3BE8C
+yellow     = #EBCB8B
+blue       = #5E81AC
+magenta    = #B48EAD
+cyan       = #8FBCBB
+white      = #D8DEE9
+orange     = #D08770
+
+; }}}
+
+; Top Bar {{{
+[bar/top]
+; Size
+width  = 100%
+height = 25
+
+; Offset
+;offset-x = 50%
+;offset-y = 50%
+
+; Position
+bottom = false
+
+; Radius
+radius = 0
+
+; Align modules fixed to middle
+fixed-center = true
+
+; Colors
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+; Underline
+line-size  = 4
+line-color = ${colors.white}
+
+; Border
+border-size  = 0
+
+; Padding
+padding-left  = 0
+padding-right = 0
+
+; Margin of modules
+module-margin-left  = 0
+module-margin-right = 0
+
+; Font
+font-0 = IBM 3270:size=14:antialias=true;3
+font-1 = Hack Nerd Font:size=13;3
+
+; Modlues
+modules-left   = i3
+modules-center = time date
+modules-right  = audio network1 network ss battery lock 
+
+; Cursor actions
+cursor-click  = pointer
+cursor-scroll = ns-resize
+
+; Separator
+separator = " "
+
+; }}}
+
+; i3 Module {{{
+[module/i3]
+type = internal/i3
+
+strip-wsnumbers = true
+
+ws-icon-0 = "1;"
+ws-icon-1 = "2;" 
+ws-icon-2 = "3;" 
+ws-icon-3 = "4;" 
+
+enable-click = false
+enable-scroll  = false
+reverse-scroll = false
+
+label-separator = " "
+
+; Focused label
+label-focused = %icon%
+label-focused-foreground= ${colors.blue}
+label-focused-padding    = 2
+
+; Occupied label
+label-occupied= %icon%%{O5}
+label-occupied-foreground = ${colors.cyan}
+label-occupied-padding    = 2
+
+; Unfocused label
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.cyan}
+label-unfocused-padding    = 2
+
+; Empty labels
+label-empty= %icon%%{O5}
+label-empty-foreground = ${colors.cyan}
+label-empty-padding    = 2
+
+; Urgent labels
+label-urgent = %icon%%{O5}
+label-urgent-foreground = ${colors.red}
+label-urgent-padding    = 2
+
+; }}}
+
+; Time Module {{{
+[module/time]
+type = internal/date
+
+; Update interval
+interval = 1.0
+
+; Format
+time = %I:%M%P
+
+; Label
+label            = %time%
+label-foreground = ${colors.cyan}
+label-padding    = 1
+
+; }}}
+
+; Date Module {{{
+[module/date]
+type = internal/date
+
+; Update interval
+interval = 1.0
+
+; Format
+date = %A, %d %B
+
+; Label
+label            = %date%
+label-foreground = ${colors.cyan}
+label-padding    = 1
+
+; }}}
+
+; Audio Module {{{
+[module/audio]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume><label-volume>
+
+; Volume label
+label-volume = %percentage%%
+label-volume-foreground = ${colors.cyan}
+label-volume-padding    = 1
+
+; Ramp label
+ramp-volume-foreground = ${colors.white}
+ramp-volume-0 =  
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+
+; Muted label
+label-muted            = 
+label-muted-background = ${colors.red}
+label-muted-padding    = 1
+
+; }}}
+
+; Network Module 1 {{{
+[module/network1]
+type = custom/script
+
+tails = true
+
+; exec = iwlist wlp3s0 scan | grep ESSID | cut -d\" -f2
+;click-left = echo $(iwlist wlp3s0 scan | grep Quality | cut -d= -f2 | cut -d/ -f1)
+
+exec = echo hey
+click-left= echo hello
+
+format = <label>
+label = %output%
+;}}}
+
+; Network Module {{{
+[module/network]
+type = internal/network
+
+; Interface
+interface =  wlp3s0
+
+; Connected label
+label-connected            = %{F$colors.white}%{F-} %{F#8FBCBB}%downspeed%%{F-}
+label-connected-foreground= ${colors.cyan}
+label-connected-padding    = 1
+
+click-left = echo hell
+; Disconnected label
+label-disconnected            = %{O05}
+label-disconnected-foreground= ${colors.red}
+label-disconnected-padding    = 1
+
+; }}}
+
+; Lock Module {{{
+[module/lock]
+type = custom/text
+
+; Label
+content            = %{O5}
+content-foreground = ${colors.blue}
+content-padding    = 1
+
+; Mouse click
+click-left = slock
+
+; }}}
+
+; Other {{{
+[settings]
+screenchange-reload     = true
+;compositing-background = xor
+;compositing-foreground = source
+;compositing-border     = over
+pseudo-transparency     = true
+
+; }}}
+
+; Battery Module {{{
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+
+battery = BAT0
+adapter = ADP1
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-charging-foreground = ${colors.cyan}
+label-discharging-foreground = ${colors.cyan}
+
+format-discharging = <ramp-capacity> <label-discharging>
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
+ 
+label-full = 
+format-charging = <animation-charging> <label-charging>
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-6 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; }}}
+
+; WM {{{
+[global/wm]
+margin-top    = 0
+margin-bottom = 0
+
+; }}}
+
+; Screenshot {{{
+
+[module/ss]
+
+type = custom/script
+exec = echo "nothing"
+click-left = ~/.scripts/screenshot
+tail = false
+format = <label>
+label = 
+label-foreground = ${colors.white}
+label-padding = 1
+
+;}}}
+
+; vim:foldmethod=marker

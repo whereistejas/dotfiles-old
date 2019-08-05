@@ -1,0 +1,21 @@
+#!/bin/bash
+
+date=$(date +%Y%m%d-%H%M%S)
+path="/home/tsanap/.ss/""$date"".png"
+
+op1="Take a screenshot\n"
+op2="Take a screenshot and upload to pastebin\n"
+
+op=$(echo -e "$op1""$op2" | rofi -dmenu -p screenshot -format i)
+
+case "${op}" in
+	0)
+		gnome-screenshot -f "$path"
+		notify-send "Screenshot saved as $path" ;;
+	1)
+		gnome-screenshot -f "$path"
+		url="$(curl -sF "file=@${path}" https://0x0.st)"  
+		echo "$url" | xclip -in -selection clipboard
+		notify-send "$url" ;;
+	
+esac

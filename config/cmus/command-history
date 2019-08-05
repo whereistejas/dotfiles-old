@@ -1,0 +1,12 @@
+colorscheme default
+q
+colorscheme solarized-dark
+colorscheme nord
+set resume=true
+quit
+colorscheme dracula
+colorscheme jellybeans
+colorscheme green-mono-88
+colorscheme green
+colorscheme gray-88
+add ~/media/Music/

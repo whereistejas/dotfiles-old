@@ -1,0 +1,22 @@
+XTerm*termName: xterm-256color
+XTerm*faceName: Hack Nerd Font:style=Regular:size=20pt
+XTerm*faceBold: Hack Nerd Font:style=Bold:size=20pt
+! XTerm*faceName: San Francisco Text:style=Medium:size=15
+! XTerm*faceBold: San Francisco Text:style=Bold:size=15
+! XTerm*faceName: Source Code Pro:style=Regular:size=15
+! XTerm*faceBold: Source Code Pro:style=Bold:size=15
+XTerm*italicULMode: false
+XTerm*dynamicColors: true
+XTerm*cursorBlink: true
+XTerm*autoWrap: true
+XTerm*scrollBar: false
+xterm*disallowedWindowOps: 20,21,SetXProp
+XTerm*internalBorder: 1
+XTerm*scaleHeight: 1
+XTerm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*selectToClipboard: true
+XTerm*eightBitInput: false
+*VT100*translations:      #override \n\
+               Ctrl <Key> +:       larger-vt-font() \n\
+               Ctrl <Key> -:       smaller-vt-font()
+XTerm*bellIsUrgent: true

@@ -1,0 +1,2 @@
+#!/bin/bash
+xterm -e youtube-dl --write-description --write-info-json --write-thumbnail -o "/home/tsanap/media/Videos/youtube/%(uploader)s/%(title)s.%(ext)s" "$1"
