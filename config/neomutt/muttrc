@@ -28,6 +28,7 @@ set query_command="notmuch-addrlookup --mutt '%s'"
 bind editor <Tab> complete-query
 bind editor ^T complete
 set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+set signature="~/.config/neomutt/signature"
 
 set index_format = "%4C (%4c) %Z %?GI?%GI& ? %[%d/%b]  %-20.19F %?K?%15.14K&               ? %?M?(%3M)&     ? %?X? & ? %s %> %?g?%g?"
 # }}}
